@@ -1,0 +1,41 @@
+<% if flash[:alert] %>
+  <p style="color: red"><%= flash[:alert] %></p>
+<% end %>
+
+<% if flash[:notice] %>
+  <p style="color: green"><%= flash[:notice] %></p>
+<% end %>
+
+<h1>Editing product</h1>
+
+<%= render "form", product: @product %>
+
+<br>
+
+<div>
+  <%= link_to "Show this product", @product %> |
+  <%= link_to "Back to products", products_path %>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    const submitBtn = form.querySelector("input[type=submit]");
+
+    const validateInputs = () => {
+      let emptyField = false;
+
+      form.querySelectorAll("input[data-validate]").forEach(input => {
+        if (!input.value.trim()) {
+          emptyField = true;
+          return; // Simula un break
+        }
+      });
+
+      submitBtn.disabled = emptyField;
+    };
+
+    form.addEventListener("input", validateInputs);
+    validateInputs(); // Verifica al cargar la página
+  });
+</script>
