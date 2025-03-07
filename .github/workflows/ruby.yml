@@ -1,14 +1,16 @@
-name: Workflows-Ruby
-on: [push]
-
+name: Ruby on Rails Tests
+on:
+  push:
+    branches:
+      - main
 jobs:
-  trabajo1:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: checkout code
+    - name: Checkout code
       uses: actions/checkout@v2
-      
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
@@ -17,9 +19,9 @@ jobs:
     - name: Install dependencies
       run: |
         gem install bundler
-        bundle install  --jobs 4 --retry 3
-      
-    - name: Setup database
+        bundle install --jobs 4 --retry 3
+
+    - name: Set up database
       run: |
         bin/rails db:create
         bin/rails db:schema:load
